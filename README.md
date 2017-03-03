@@ -1,37 +1,32 @@
-## Welcome to GitHub Pages
+# different conversion used
+# as.character to change factor to character
+# as.date to change character to date
+# as.POSIXct to change date for comparision
 
-You can use the [editor on GitHub](https://github.com/Psychanalytics/Time.performance.in-R/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+for(i in 1:2224){
+  sdate <- sampl2$Survey.Start.Date[i] #storing date value of Survey. start.date
+  sdate2 <- sampl2$Survey.End.Date[i] #storing date value of Survey. end.date
+  sdate2 <- sdate2 + 86400 #for entries/tab.no recorded after survey end date
+  for (j in 1 : 21531){
+    sdate3 <- sampl1$Survey.Date[j]
+    if (sampl1$Tab.No[j]==sampl2$Tab.No[i]){ # comparing Tab.No.
+    if (sdate3 >= sdate){ # comparing survey date
+      if (sdate3 <= sdate2){ # comparing survey date with end date
+         sampl1$AC.Name[j] <- sampl2$AC.Name[i] # storing values
+         sampl1$Mandal.Name[j] <- sampl2$Mandal.Name[i]
+         sampl1$Village.Name[j] <- sampl2$Village.Name[i]
+      }
+      
+    }
+    }
+    j <- j + 1 #value incrementor for loop
+  }
+  i <- i + 1
+}
+write.csv2(sampl1,file="dataset")
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Psychanalytics/Time.performance.in-R/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+# sampl1 is the dataset imported from sheet1
+# sampl2 is the dataset imported from sheet2
+# sdate(2,3) are the vectors storing values of date for comparision
+# data stored in sampl1
+# and written in dataset as csv2
